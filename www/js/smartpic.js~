@@ -59,7 +59,7 @@ $(document).ready(function(){
 	//Device is ready
 		dbSetting();
 		$("#cambtn").tap(openCamera);//Opens Camera App
-		$("#galbtn").tap(readPaths);//Reads all the Image Path 
+		$("#galbtn").tap(readPaths);//Reads all the 
 	});
 	//Loaded all DOM elements
 });
