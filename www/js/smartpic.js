@@ -10,10 +10,33 @@ $(document).ready(function(){
 	function tookPic(imageURI){
 	//Called when shoted an picture using Camera	
 	dbName.transaction(function(tx){
-		//Insert the picture path in DB
+		//Saves the picture path in DB
 		tx.executeSql("insert into smartpictable(picPath) values(?)",[imageURI]);
 		
 	});
+	}
+
+	function cancelCam(message){
+	//Called when Camera App Closed
+		alert('Failed because: ' + message);
+	}
+
+	function readPaths(){
+	//Reads the Saved Picture paths from the DB
+		dbName.transaction(function(tx){
+			tx.executeSql("select * from smartpictable",[],gridFormer);
+		});
+	}
+
+	function gridFormer(transaction,results){
+		//Displays the pictures in an Gridview
+		var imagePad=$("#imageBanner");
+
+		for(int i=0;i<results.rows.length;i++){
+			var row=results.rows.item(i);
+			if (i%2==0) imagePad.append("<div class='ui-block-a thumbnail'><img src='row.picPath' id='row.picId'></div>");
+			else imagePad.append("<div class='ui-block-a thumbnail'><img src='row.picPath' id='row.picId'></div>");
+		}
 	}
 
 	function dbSetting(){
@@ -30,14 +53,12 @@ $(document).ready(function(){
 		}
 	}
 
-	function cancelCam(message){
-	//Called when Camera App Closed
-	alert('Failed because: ' + message);
-	}
+	
+	
 	document.addEventListener('deviceready',function(){
 	//Device is ready
-	dbSetting();
-	$("#cambtn").tap(openCamera);
+		dbSetting();
+		$("#cambtn").tap(openCamera);//Opens Camera App
 	});
 	//Loaded all DOM elements
 });
