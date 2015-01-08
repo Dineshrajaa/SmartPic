@@ -1,0 +1,6 @@
+
+create a sample Photo Gallery Application
+which list the images in grid view,
+ where we can add images by capturing or from gallery. 
+ you can also remove the images.
+ use local store to store the image so that previously selected or captured image stays in the grid view until the user deletes the app.
