@@ -2,7 +2,7 @@ $(document).ready(function(){
 	var dbName=window.openDatabase("smartPicDB",1.0,"smartPicDB",5242880);
 	//Function Declarations
 	function openCamera(){
-	//Opens Device Camera App
+	//Opens Device Camera App	
 		navigator.camera.getPicture(tookPic, cancelCam, { quality: 50,
     	destinationType: Camera.DestinationType.FILE_URI });
 	}
@@ -21,24 +21,26 @@ $(document).ready(function(){
 		alert('Failed because: ' + message);
 	}
 
+	function gridFormer(transaction,results){
+		//Displays the pictures in an Gridview
+
+		for(var i=0;i<results.rows.length;i++){
+			var row=results.rows.item(i);			
+			if (i%2==0) $("#imageBanner").append('<div class="ui-block-a"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
+			else $("#imageBanner").append('<div class="ui-block-b"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
+		}
+		$(":mobile-pagecontainer").pagecontainer("change","#grid-page");
+	} 
+
 	function readPaths(){
-	//Reads the Saved Picture paths from the DB
+	//Reads the Saved Picture paths from the DB		
+		
 		dbName.transaction(function(tx){
-			tx.executeSql("select * from smartpictable",[],gridFormer);
+			tx.executeSql("select * from smartpictable",[],gridFormer);//Reads the FilePaths from DB
 		});
 	}
 
-	function gridFormer(transaction,results){
-		//Displays the pictures in an Gridview
-		var imagePad=$("#imageBanner");
-
-		for(int i=0;i<results.rows.length;i++){
-			var row=results.rows.item(i);
-			if (i%2==0) imagePad.append("<div class='ui-block-a thumbnail'><img src='row.picPath' id='row.picId'></div>");
-			else imagePad.append("<div class='ui-block-a thumbnail'><img src='row.picPath' id='row.picId'></div>");
-		}
-	}
-
+	
 	function dbSetting(){
 		if (window.openDatabase) {
 			//Checks whether WebSQL is supported			
