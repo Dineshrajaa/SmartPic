@@ -4,7 +4,7 @@ $(document).ready(function(){
 	function openCamera(){
 	//Opens Device Camera App
 		navigator.camera.getPicture(tookPic, cancelCam, { quality: 50,
-    	destinationType: Camera.DestinationType.NATIVE_URI });
+    	destinationType: Camera.DestinationType.FILE_URI });
 	}
 
 	function tookPic(imageURI){
