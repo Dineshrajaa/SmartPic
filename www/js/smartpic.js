@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	var dbName=window.openDatabase("smartPicDB",1.0,"smartPicDB",5242880);
+	var imgSrc="";
 	//Function Declarations
 	function openCamera(){
 	//Opens Device Camera App	
@@ -26,15 +27,17 @@ $(document).ready(function(){
 
 		for(var i=0;i<results.rows.length;i++){
 			var row=results.rows.item(i);			
-			if (i%2==0) $("#imageBanner").append('<div class="ui-block-a"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
-			else $("#imageBanner").append('<div class="ui-block-b"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
-		}
+			if (i%2==0) imgSrc+='<div class="ui-block-a"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>';//$("#imageBanner").append('<div class="ui-block-a"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
+			else imgSrc+='<div class="ui-block-b"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>';//$("#imageBanner").append('<div class="ui-block-b"><div class="thumbnail"><img src="'+row.picPath+'" /></div></div>');
+		}		
 		$(":mobile-pagecontainer").pagecontainer("change","#grid-page");
+		$("#imageBanner").html(imgSrc);
 	} 
 
 	function readPaths(){
 	//Reads the Saved Picture paths from the DB		
-		
+		$("#imageBanner").empty();
+		imgSrc="";
 		dbName.transaction(function(tx){
 			tx.executeSql("select * from smartpictable",[],gridFormer);//Reads the FilePaths from DB
 		});
@@ -55,6 +58,10 @@ $(document).ready(function(){
 		}
 	}
 
+	function cleanPage(){
+		$("#imageBanner").empty();
+	}
+
 	
 	
 	document.addEventListener('deviceready',function(){
@@ -62,6 +69,7 @@ $(document).ready(function(){
 		dbSetting();
 		$("#cambtn").tap(openCamera);//Opens Camera App
 		$("#galbtn").tap(readPaths);//Reads all the Image Path 
+		//$("#cleanbtn").tap(cleanPage);//Cleans the ImageBanner
 	});
 	//Loaded all DOM elements
 });
