@@ -37,7 +37,7 @@ $(document).ready(function(){
 	function readPaths(){
 	//Reads the Saved Picture paths from the DB		
 		$("#imageBanner").empty();
-		imgSrc="";
+		imgSrc=" ";
 		dbName.transaction(function(tx){
 			tx.executeSql("select * from smartpictable",[],gridFormer);//Reads the FilePaths from DB
 		});
